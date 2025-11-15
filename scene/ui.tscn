@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxg587y26faos"]
+
+[ext_resource type="Script" uid="uid://mmwy0nw625kf" path="res://scene/ui.gd" id="1_onfsl"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_onfsl")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HP_Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "HP : 1000"
+
+[node name="Energy_Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Energi 5 / 5"
