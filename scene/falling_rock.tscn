@@ -1,0 +1,106 @@
+[gd_scene load_steps=16 format=3 uid="uid://cg7o0ghiunkyi"]
+
+[ext_resource type="Script" uid="uid://cn1x7y2y3wums" path="res://scene/falling_rock.gd" id="1_1y3hx"]
+[ext_resource type="Texture2D" uid="uid://5luhqydvvarh" path="res://assets/Trap and Weapon/FallingRock.png" id="1_lwbcb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1y3hx"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jllqp"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbe3c"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muipv"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xal2j"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlkhd"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymm0i"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4ddp"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjq6o"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7kms"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fw7va"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bl8xh"]
+atlas = ExtResource("1_lwbcb")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_luj4x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1y3hx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jllqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbe3c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muipv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xal2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlkhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymm0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4ddp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjq6o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7kms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fw7va")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bl8xh")
+}],
+"loop": false,
+"name": &"hancur",
+"speed": 13.0
+}]
+
+[node name="FallingRock" type="Node2D"]
+script = ExtResource("1_1y3hx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 8)
+sprite_frames = SubResource("SpriteFrames_luj4x")
+animation = &"hancur"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
