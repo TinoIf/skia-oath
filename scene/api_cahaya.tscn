@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://cns555i700fkj"]
+
+[ext_resource type="Script" uid="uid://c41mwiho1xylu" path="res://scene/api_cahaya.gd" id="1_0yshk"]
+[ext_resource type="Texture2D" uid="uid://casm5hmj7vws0" path="res://assets/Trap and Weapon/Fire.png" id="1_egegd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yshk"]
+atlas = ExtResource("1_egegd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usv4h"]
+atlas = ExtResource("1_egegd")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1rjc"]
+atlas = ExtResource("1_egegd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8prr4"]
+atlas = ExtResource("1_egegd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eykhr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0yshk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usv4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1rjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8prr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1rjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0yshk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usv4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0yshk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1rjc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ci6sw"]
+radius = 5.09902
+
+[node name="ApiCahaya" type="Area2D"]
+script = ExtResource("1_0yshk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_eykhr")
+autoplay = "default"
+frame_progress = 0.611054
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_ci6sw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
