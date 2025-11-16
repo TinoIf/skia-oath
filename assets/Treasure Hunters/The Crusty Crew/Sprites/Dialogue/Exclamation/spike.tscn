@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://y34f5rfee4ih"]
+[gd_scene load_steps=5 format=3 uid="uid://y34f5rfee4ih"]
 
 [ext_resource type="Script" uid="uid://cwv4vj3cf573q" path="res://script/spike.gd" id="1_vi0yg"]
 [ext_resource type="Texture2D" uid="uid://dmuiye8qpgr5w" path="res://assets/Trap and Weapon/27.png" id="2_dlj5e"]
+[ext_resource type="AudioStream" uid="uid://c3akos6akm5pv" path="res://assets/audio/giant-fall-impact-352446.mp3" id="3_a14pt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ryga"]
-size = Vector2(46, 292)
+size = Vector2(86, 295)
 
 [node name="Spike" type="CharacterBody2D"]
 script = ExtResource("1_vi0yg")
@@ -26,11 +27,16 @@ polygon = PackedVector2Array(14, 36, 14, 18, 32, 18, 26, 13, 48, 12, 58, 18, 59,
 priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectZone"]
-position = Vector2(37, 157)
+position = Vector2(39, 155.5)
 shape = SubResource("RectangleShape2D_8ryga")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(14, 17, 14, 38, 20, 51, 24, 41, 27, 52, 33, 38, 33, 19, 26, 14, 47, 14, 40, 19, 41, 39, 45, 52, 50, 40, 53, 51, 61, 35, 60, 19, 51, 15, 50, 10, 22, 10, 22, 14)
+
+[node name="TrapSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_a14pt")
+volume_db = 12.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="PlayerDetectZone" to="." method="_on_player_detect_zone_body_entered"]

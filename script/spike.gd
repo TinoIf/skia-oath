@@ -12,7 +12,7 @@ var current_state = State.IDLE
 @onready var sprite = $Sprite2D # Pastikan nama node sprite Anda "Sprite2D"
 @onready var hitbox_shape = $Hitbox/CollisionPolygon2D # Sesuaikan jika namanya beda
 @onready var detect_zone_shape = $PlayerDetectZone/CollisionShape2D
-
+@onready var fall_sfx: AudioStreamPlayer2D = $TrapSFX
 var original_sprite_position: Vector2
 
 func _ready():
@@ -91,6 +91,7 @@ func _on_hitbox_body_entered(body):
 
 	# 3. HANYA jika trap sedang JATUH, jalankan logika hancur
 	if current_state == State.FALLING:
+		fall_sfx.play()
 		# Trap menabrak sesuatu (player ATAU lantai) saat jatuh
 		current_state = State.LANDED # Berhenti jatuh
 		
