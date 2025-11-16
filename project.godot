@@ -11,9 +11,17 @@ config_version=5
 [application]
 
 config/name="skia-oath"
-run/main_scene="uid://bgldoo23fygli"
+run/main_scene="uid://btpgxgugyp3m5"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalSignal="*res://script/GlobalSignal.gd"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [input]
 
