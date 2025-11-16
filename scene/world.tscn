@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://bgldoo23fygli"]
+[gd_scene load_steps=67 format=4 uid="uid://bgldoo23fygli"]
 
 [ext_resource type="Texture2D" uid="uid://c16ubut2yvvgv" path="res://assets/Medieval_Castle_Asset_Pack/Tiles/blank.png" id="1_wukud"]
 [ext_resource type="Texture2D" uid="uid://chcs7pqsl08b7" path="res://assets/Medieval_Castle_Asset_Pack/Tiles/lion_column_6.png" id="2_a81yy"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://bxg587y26faos" path="res://scene/ui.tscn" id="28_x11oh"]
 [ext_resource type="PackedScene" uid="uid://y34f5rfee4ih" path="res://assets/Treasure Hunters/The Crusty Crew/Sprites/Dialogue/Exclamation/spike.tscn" id="29_7h02s"]
 [ext_resource type="AudioStream" uid="uid://bwcuet2dlqyi1" path="res://assets/audio/terrifying-scream-353210.mp3" id="29_hb7oa"]
+[ext_resource type="PackedScene" uid="uid://cawtr0tsxx3rl" path="res://scene/check_point.tscn" id="30_qsqtq"]
 [ext_resource type="PackedScene" uid="uid://cns555i700fkj" path="res://scene/api_cahaya.tscn" id="31_spjrp"]
 [ext_resource type="PackedScene" uid="uid://dah5g45eoadfv" path="res://scene/darkness.tscn" id="32_13g4d"]
 [ext_resource type="AudioStream" uid="uid://b8s0o354ookw0" path="res://assets/audio/lonely-wolf-dark-ravers-344755.mp3" id="33_tl5qk"]
@@ -290,7 +291,10 @@ position = Vector2(1740, 1263)
 position = Vector2(1872, 1059)
 
 [node name="Spike18" parent="Trap" instance=ExtResource("29_7h02s")]
-position = Vector2(1742, 800)
+position = Vector2(2501, 209)
+
+[node name="Spike20" parent="Trap" instance=ExtResource("29_7h02s")]
+position = Vector2(1773, 9)
 
 [node name="Spike14" parent="Trap" instance=ExtResource("29_7h02s")]
 position = Vector2(3028, -391)
@@ -360,3 +364,11 @@ stream = ExtResource("33_tl5qk")
 autoplay = true
 bus = &"AudioGame"
 parameters/looping = true
+
+[node name="CheckPoint" parent="." instance=ExtResource("30_qsqtq")]
+light_mask = 3
+position = Vector2(2040, 927)
+
+[node name="CheckPoint2" parent="." instance=ExtResource("30_qsqtq")]
+light_mask = 3
+position = Vector2(1318, 1608)

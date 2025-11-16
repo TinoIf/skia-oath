@@ -10,8 +10,6 @@ var current_hp = MAX_HP
 # --- Variabel Energi (BARU) ---
 const MAX_ENERGY = 5
 var current_energy = MAX_ENERGY
-const MAX_FIRE = 10
-var current_fire = 0
 
 # --- Variabel Dash ---
 const DASH_SPEED = 350.0   # Seberapa cepat dash-nya
@@ -43,10 +41,16 @@ const VISION_SCALE_START = 1.0
 const VISION_SCALE_END = 7.0   
 
 func _ready() -> void:
+	await get_tree().process_frame
 	GlobalSignal.hp_updated.emit(current_hp)
 	GlobalSignal.energy_updated.emit(current_energy, MAX_ENERGY)
-	GlobalSignal.fire_updated.emit(current_fire, MAX_FIRE)
+	GlobalSignal.fire_updated.emit(GlobalState.current_fire, GlobalState.MAX_FIRE)
 	update_vision_scale()
+	
+	if GlobalState.last_checkpoint_position != Vector2.ZERO:
+		
+		# Jika ya, pindahkan posisi Player ke checkpoint itu
+		self.global_position = GlobalState.last_checkpoint_position
 
 func _physics_process(delta: float) -> void:
 	
@@ -237,26 +241,24 @@ func hancurkan_batu(map_pos):
 	get_parent().add_child(rock)
 
 func collect_fire():
-	if current_fire < MAX_FIRE:
-		current_fire += 1
+	if GlobalState.current_fire < GlobalState.MAX_FIRE:
+		GlobalState.current_fire += 1
 		
 		# Umumkan ke Papan Pengumuman
-		GlobalSignal.fire_updated.emit(current_fire, MAX_FIRE)
+		GlobalSignal.fire_updated.emit(GlobalState.current_fire, GlobalState.MAX_FIRE)
 		fire_pickup_sfx.play()
-		print("Api diambil! Total: ", current_fire) # Untuk debug
+		print("Api diambil! Total: ", GlobalState.current_fire) # Untuk debug
 		update_vision_scale()
 		
 # (FUNGSI BARU) - Untuk meng-update skala 'Topeng'
 # (FUNGSI BARU) - Untuk meng-update skala 'Topeng'
 func update_vision_scale():
 	# 1. Hitung progres (angka dari 0.0 s/d 1.0)
-	var progress = float(current_fire) / float(MAX_FIRE)
+	var progress = float(GlobalState.current_fire) / float(GlobalState.MAX_FIRE)
 	
 	# 2. Hitung skala baru (interpolasi dari 1.0 ke 10.0)
 	var new_scale = lerp(VISION_SCALE_START, VISION_SCALE_END, progress)
 	
-	# (PRINT DEBUG) Cek nilainya
-	print("Api: ", current_fire, " Progress: ", progress, " New Scale: ", new_scale)
 	
 	# 3. Terapkan skala baru ke 'Topeng'
 	if darkness_mask:
