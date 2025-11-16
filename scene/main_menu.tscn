@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://btpgxgugyp3m5"]
+
+[ext_resource type="Script" uid="uid://b5gkou0nf7f20" path="res://main_menu.gd" id="1_hxu56"]
+[ext_resource type="Texture2D" uid="uid://b5xwyd36ralq" path="res://assets/mask-assets/Skia.png" id="2_2fwvj"]
+[ext_resource type="FontFile" uid="uid://bioeccpvyicxc" path="res://assets/font/BebasNeue-Regular.ttf" id="3_2fwvj"]
+[ext_resource type="AudioStream" uid="uid://cgmp5iyov05x4" path="res://assets/audio/old-broken-music-box-sound-effect-386717.mp3" id="4_0iwki"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hxu56")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_2fwvj")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.105672, 0.658223, 0.925749, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.275845, 0.570906, 0.946407, 1)
+theme_override_colors/font_color = Color(0.473111, 0.614575, 0.97045, 1)
+theme_override_colors/font_focus_color = Color(0.391468, 0.650894, 0.981782, 1)
+theme_override_colors/font_pressed_color = Color(0.434567, 0.693199, 0.999019, 1)
+theme_override_constants/h_separation = 100
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 70
+text = "Play"
+icon_alignment = 1
+
+[node name="Keluar" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2fwvj")
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0iwki")
+volume_db = 4.0
+autoplay = true
+bus = &"MainMenu"
+parameters/looping = true
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Keluar" to="." method="_on_keluar_pressed"]
