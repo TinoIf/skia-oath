@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://btpgxgugyp3m5"]
 
-[ext_resource type="Script" uid="uid://b5gkou0nf7f20" path="res://main_menu.gd" id="1_hxu56"]
+[ext_resource type="Script" uid="uid://2lip1pepc8bi" path="res://script/main_menu.gd" id="1_hxu56"]
 [ext_resource type="Texture2D" uid="uid://b5xwyd36ralq" path="res://assets/mask-assets/Skia.png" id="2_2fwvj"]
 [ext_resource type="FontFile" uid="uid://bioeccpvyicxc" path="res://assets/font/BebasNeue-Regular.ttf" id="3_2fwvj"]
 [ext_resource type="AudioStream" uid="uid://cgmp5iyov05x4" path="res://assets/audio/old-broken-music-box-sound-effect-386717.mp3" id="4_0iwki"]
