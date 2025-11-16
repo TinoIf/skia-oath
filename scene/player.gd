@@ -1,9 +1,7 @@
 extends CharacterBody2D
 
 # --- Sinyal untuk UI (BARU) ---
-# Sinyal ini akan mengirim "pesan" ke UI kita
-signal hp_updated(new_hp)
-signal energy_updated(new_energy, max_energy)
+
 
 # --- Variabel HP (BARU) ---
 const MAX_HP = 1000
@@ -12,6 +10,8 @@ var current_hp = MAX_HP
 # --- Variabel Energi (BARU) ---
 const MAX_ENERGY = 5
 var current_energy = MAX_ENERGY
+const MAX_FIRE = 10
+var current_fire = 0
 
 # --- Variabel Dash ---
 const DASH_SPEED = 350.0   # Seberapa cepat dash-nya
@@ -30,11 +30,25 @@ var is_dead = false
 const MAX_JUMPS = 1       # Atur ke 2 untuk double jump (1 = lompat biasa)
 var jumps_remaining = 0   # Penghitung sisa lompatan
 
+var rock_hancur_scene = preload("res://scene/falling_rock.tscn")
+@onready var tilemap : TileMapLayer = get_node("/root/WorldLv1/AwakenedCavern/Floor")
+
 # Seberapa kuat kontrol horizontal saat di udara (0.0 = tanpa kontrol, 1.0 = kontrol penuh)
 const AIR_CONTROL := 0.6
 @onready var anim: AnimatedSprite2D = $Sprite
+@onready var fire_pickup_sfx: AudioStreamPlayer2D = $FirePickupSFX
+@onready var darkness_mask: TextureRect = get_node("/root/WorldLv1/Darkness/Mask")
+const VISION_SCALE_START = 1.0 
+const VISION_SCALE_END = 7.0   
+
+func _ready() -> void:
+	GlobalSignal.hp_updated.emit(current_hp)
+	GlobalSignal.energy_updated.emit(current_energy, MAX_ENERGY)
+	GlobalSignal.fire_updated.emit(current_fire, MAX_FIRE)
+	update_vision_scale()
 
 func _physics_process(delta: float) -> void:
+	
 	# 1. Cek Kematian (Prioritas Tertinggi)
 	if is_dead:
 		return 
@@ -66,14 +80,40 @@ func _physics_process(delta: float) -> void:
 
 	# Input arah (-1 .. 1)
 	var direction := Input.get_axis("ui_left", "ui_right")
+	
 
+	move_and_slide()
+	
+	if is_on_floor():
+		# Ambil data tabrakan
+		var collision = get_last_slide_collision()
+		
+		# Cek apakah kita berdiri di atas tilemap yang benar
+		if collision and collision.get_collider() == tilemap:
+			
+			# Dapatkan posisi tile TEPAT DI BAWAH kaki kita
+			var tile_pos_below = tilemap.local_to_map(global_position + Vector2(0, 32))
+			
+			# Dapatkan data dari tile itu
+			var tile_data = tilemap.get_cell_tile_data(tile_pos_below)
+			
+			# Cek "label rahasia" (hancur)
+			if tile_data and tile_data.get_custom_data("hancur"):
+				
+				print("DEBUG: SUKSES! Berdiri di atas tile hancur!")
+				
+				# HANCURKAN!
+				hancurkan_batu(tile_pos_below)
+			
+				
+			# (Tidak perlu 'else' atau 'print GAGAL', agar tidak spam di console)
 # --- Cek Trigger Dash ---
 	# (BERUBAH: Tambahkan cek 'current_energy > 0')
 	if Input.is_action_just_pressed("dash") and not is_dashing and current_energy > 0:
 		
 		# (BARU) Kurangi energi dan update UI
 		current_energy -= 1
-		energy_updated.emit(current_energy, MAX_ENERGY) # Kirim sinyal
+		GlobalSignal.energy_updated.emit(current_energy, MAX_ENERGY) # Kirim sinyal
 		
 		# Sisa logika dash Anda...
 		is_dashing = true
@@ -124,7 +164,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				anim.play("Idle")
 
-	move_and_slide()
+	
 	
 func die():
 	# Cek agar fungsi ini tidak terpicu berkali-kali
@@ -144,7 +184,7 @@ func _on_energy_regen_timer_timeout() -> void:
 	if current_energy < MAX_ENERGY:
 		current_energy += 1
 		# Kirim sinyal ke UI bahwa energi sudah di-update
-		energy_updated.emit(current_energy, MAX_ENERGY)
+		GlobalSignal.energy_updated.emit(current_energy, MAX_ENERGY)
 		
 func take_damage(amount):
 	# Jangan ambil damage jika sudah mati ATAU sudah sedang kena hit
@@ -156,7 +196,7 @@ func take_damage(amount):
 	
 	# 2. Kurangi HP & Update UI
 	current_hp -= amount
-	hp_updated.emit(current_hp) # Kirim sinyal ke UI
+	GlobalSignal.hp_updated.emit(current_hp) # Kirim sinyal ke UI
 	
 	# 3. Mainkan Animasi Hit
 	# (Pastikan Anda punya animasi bernama "Hit" di AnimatedSprite2D)
@@ -174,3 +214,51 @@ func take_damage(amount):
 		is_hit = false
 		# (Opsional) Paksa kembali ke 'Idle' agar tidak 'stuck'
 		anim.play("Idle")
+		
+# (FUNGSI BARU)
+# 'map_pos' adalah koordinat tile yang ingin kita hancurkan (misal: (5, 11))
+func hancurkan_batu(map_pos):
+	
+	# 1. HAPUS TILE DARI TILEMAP
+	# Parameter: (posisi_grid, layer_tilemap, id_tile)
+	# -1 berarti "sel kosong"
+	tilemap.set_cell(map_pos, -1) 
+	
+	# 2. MUNCULKAN "AKTOR" ANIMASI KITA
+	var rock = rock_hancur_scene.instantiate()
+	# Kita ubah koordinat grid (5, 11) kembali ke posisi dunia (pixel)
+	# Kita tambah setengah ukuran tile agar animasinya pas di tengah
+	rock.global_position = tilemap.map_to_local(map_pos)
+	
+	# 4. TAMBAHKAN ANIMASI KE LEVEL
+	# get_parent() akan menambahkan 'rock' ke scene 'WorldLv1' (induk dari Player)
+	get_parent().add_child(rock)
+
+func collect_fire():
+	if current_fire < MAX_FIRE:
+		current_fire += 1
+		
+		# Umumkan ke Papan Pengumuman
+		GlobalSignal.fire_updated.emit(current_fire, MAX_FIRE)
+		fire_pickup_sfx.play()
+		print("Api diambil! Total: ", current_fire) # Untuk debug
+		update_vision_scale()
+		
+# (FUNGSI BARU) - Untuk meng-update skala 'Topeng'
+# (FUNGSI BARU) - Untuk meng-update skala 'Topeng'
+func update_vision_scale():
+	# 1. Hitung progres (angka dari 0.0 s/d 1.0)
+	var progress = float(current_fire) / float(MAX_FIRE)
+	
+	# 2. Hitung skala baru (interpolasi dari 1.0 ke 10.0)
+	var new_scale = lerp(VISION_SCALE_START, VISION_SCALE_END, progress)
+	
+	# (PRINT DEBUG) Cek nilainya
+	print("Api: ", current_fire, " Progress: ", progress, " New Scale: ", new_scale)
+	
+	# 3. Terapkan skala baru ke 'Topeng'
+	if darkness_mask:
+		darkness_mask.scale = Vector2(new_scale, new_scale)
+		
+		# (HAPUS) Kita tidak perlu mengatur alpha lagi
+		# darkness_mask.modulate.a = new_alpha

@@ -429,20 +429,20 @@ height = 32.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_oh5ij")
+metadata/_edit_vertical_guides_ = [-10.0]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(19, 22)
+position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_1yrng")
-animation = &"Hit"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(20, 23)
 shape = SubResource("CapsuleShape2D_oh5ij")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(22, 22)
-zoom = Vector2(3.36, 3.36)
+position = Vector2(1, -1)
+zoom = Vector2(2.495, 2.495)
 limit_left = 0
 position_smoothing_enabled = true
 
