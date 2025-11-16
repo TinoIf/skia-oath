@@ -21,3 +21,7 @@ text = "HP : 1000"
 [node name="Energy_Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Energi 5 / 5"
+
+[node name="Api_Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Api 0/10"
