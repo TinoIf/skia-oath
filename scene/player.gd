@@ -37,6 +37,7 @@ var rock_hancur_scene = preload("res://scene/falling_rock.tscn")
 const AIR_CONTROL := 0.6
 @onready var anim: AnimatedSprite2D = $Sprite
 @onready var fire_pickup_sfx: AudioStreamPlayer2D = $FirePickupSFX
+@onready var death_sfx : AudioStreamPlayer2D = $Death_SFX
 @onready var darkness_mask: TextureRect = get_node("/root/WorldLv1/Darkness/Mask")
 const VISION_SCALE_START = 1.0 
 const VISION_SCALE_END = 7.0   
@@ -79,7 +80,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += GRAVITY * delta
 
 	# Input arah (-1 .. 1)
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("left_mov", "right_mov")
 	
 
 	move_and_slide()
@@ -143,7 +144,7 @@ func _physics_process(delta: float) -> void:
 
 		# Jump (BERUBAH: Logika Double Jump)
 		# Kita tidak lagi cek is_on_floor() di sini
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("jump"):
 			if jumps_remaining > 0:
 				velocity.y = JUMP_VELOCITY
 				jumps_remaining -= 1 # Kurangi sisa lompatan setiap kali lompat
@@ -173,6 +174,7 @@ func die():
 	is_dead = true
 	# Ganti "AnimationPlayer" dengan nama node AnimationPlayer Anda
 	# Ganti "death" dengan nama animasi kematian Anda
+	death_sfx.play()
 	anim.play("Death")
 	# Kode akan "menunggu" di baris ini selama 2.0 detik
 	await anim.animation_finished

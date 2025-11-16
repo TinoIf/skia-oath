@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=4 uid="uid://bgldoo23fygli"]
+[gd_scene load_steps=66 format=4 uid="uid://bgldoo23fygli"]
 
 [ext_resource type="Texture2D" uid="uid://c16ubut2yvvgv" path="res://assets/Medieval_Castle_Asset_Pack/Tiles/blank.png" id="1_wukud"]
 [ext_resource type="Texture2D" uid="uid://chcs7pqsl08b7" path="res://assets/Medieval_Castle_Asset_Pack/Tiles/lion_column_6.png" id="2_a81yy"]
@@ -31,6 +31,7 @@
 [ext_resource type="AudioStream" uid="uid://thas5oklspln" path="res://assets/audio/logo-sfx-316751.mp3" id="28_lvrhu"]
 [ext_resource type="PackedScene" uid="uid://bxg587y26faos" path="res://scene/ui.tscn" id="28_x11oh"]
 [ext_resource type="PackedScene" uid="uid://y34f5rfee4ih" path="res://assets/Treasure Hunters/The Crusty Crew/Sprites/Dialogue/Exclamation/spike.tscn" id="29_7h02s"]
+[ext_resource type="AudioStream" uid="uid://bwcuet2dlqyi1" path="res://assets/audio/terrifying-scream-353210.mp3" id="29_hb7oa"]
 [ext_resource type="PackedScene" uid="uid://cns555i700fkj" path="res://scene/api_cahaya.tscn" id="31_spjrp"]
 [ext_resource type="PackedScene" uid="uid://dah5g45eoadfv" path="res://scene/darkness.tscn" id="32_13g4d"]
 [ext_resource type="AudioStream" uid="uid://b8s0o354ookw0" path="res://assets/audio/lonely-wolf-dark-ravers-344755.mp3" id="33_tl5qk"]
@@ -241,6 +242,10 @@ position = Vector2(51, 1508)
 
 [node name="FirePickupSFX" type="AudioStreamPlayer2D" parent="Player"]
 stream = ExtResource("28_lvrhu")
+bus = &"SFX"
+
+[node name="Death_SFX" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("29_hb7oa")
 bus = &"SFX"
 
 [node name="UI" parent="." instance=ExtResource("28_x11oh")]
