@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://br563248gpo68"]
+
+[ext_resource type="Script" uid="uid://el6rii3e3yl" path="res://scripts/hud.gd" id="1_ahhtf"]
+[ext_resource type="Texture2D" uid="uid://dx8rddnoucx7c" path="res://assets/UI/ValueBar_128x16.png" id="2_6fi6k"]
+[ext_resource type="Texture2D" uid="uid://cdd6blgsms0gj" path="res://assets/UI/ValueRed_120x8.png" id="3_6fi6k"]
+[ext_resource type="Texture2D" uid="uid://binf7by8c1o5x" path="res://assets/UI/ValueBlue_120x8.png" id="4_6fi6k"]
+[ext_resource type="FontFile" uid="uid://bioeccpvyicxc" path="res://assets/font/BebasNeue-Regular.ttf" id="4_uo2fv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_047uy"]
+line_spacing = 20.0
+font = ExtResource("4_uo2fv")
+font_size = 15
+font_color = Color(0.760784, 1, 0.862745, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5pdws"]
+line_spacing = 20.0
+font = ExtResource("4_uo2fv")
+font_size = 15
+font_color = Color(0.760784, 1, 0.862745, 1)
+shadow_size = 5
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_ahhtf")
+
+[node name="HUD_Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD_Container"]
+layout_mode = 0
+offset_left = 20.0
+offset_right = 244.0
+offset_bottom = 76.0
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD_Container/VBoxContainer"]
+layout_mode = 2
+
+[node name="EnergyBar" type="TextureProgressBar" parent="HUD_Container/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture_under = ExtResource("2_6fi6k")
+texture_progress = ExtResource("4_6fi6k")
+texture_progress_offset = Vector2(5, 5)
+
+[node name="Label" type="Label" parent="HUD_Container/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "ENERGY"
+label_settings = SubResource("LabelSettings_047uy")
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HUD_Container/VBoxContainer"]
+layout_mode = 2
+
+[node name="HpBar" type="TextureProgressBar" parent="HUD_Container/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture_under = ExtResource("2_6fi6k")
+texture_progress = ExtResource("3_6fi6k")
+texture_progress_offset = Vector2(5, 5)
+
+[node name="Label" type="Label" parent="HUD_Container/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "HP"
+label_settings = SubResource("LabelSettings_5pdws")
+horizontal_alignment = 1
