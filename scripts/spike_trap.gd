@@ -12,7 +12,7 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 
 func trigger_trap():
 	is_active = true	
-	anim_player.play("spike_anim")
+	anim_player.call_deferred("play", "spike_anim")
 	
 	# Tunggu sampai animasi selesai baru bisa dipicu lagi
 	await anim_player.animation_finished

@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="skia-oath"
-run/main_scene="uid://btcv244g8n5ro"
-config/features=PackedStringArray("4.4", "Mobile")
+run/main_scene="uid://cafgiv4mfbysi"
+config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
 [audio]
@@ -21,11 +25,14 @@ buses/default_bus_layout=""
 
 [autoload]
 
-GameManager="*res://scripts/game_manager.gd"
+GameManager="*uid://c4qjfiha13i7"
+AudioManager="*uid://bn0mlp8xmaosi"
 
 [display]
 
-window/stretch/mode="viewport"
+window/size/mode=3
+window/size/initial_position=Vector2i(-8, 0)
+window/stretch/mode="canvas_items"
 
 [input]
 
@@ -52,6 +59,16 @@ left_mov={
 attack={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+pause={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+interact={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
 ]
 }
 

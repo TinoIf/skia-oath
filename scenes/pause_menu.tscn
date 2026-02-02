@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://bgieln10saupo"]
+
+[ext_resource type="Script" uid="uid://du3xmgjbxplga" path="res://scripts/pause_menu.gd" id="1_prdx0"]
+[ext_resource type="Texture2D" uid="uid://c702yxbv84rwe" path="res://assets/UI/bg_pause.png" id="2_y72sm"]
+[ext_resource type="Texture2D" uid="uid://b3sdxll0e6bo7" path="res://assets/UI/btn_resume.png" id="3_s1krw"]
+[ext_resource type="Texture2D" uid="uid://cr7v24d6wft2n" path="res://assets/UI/btn_hover_paused.png" id="4_88e76"]
+[ext_resource type="Texture2D" uid="uid://bdjr621dk8xxu" path="res://assets/UI/btn_restart.png" id="4_bob8p"]
+[ext_resource type="Texture2D" uid="uid://djxjnmehsgxau" path="res://assets/UI/btn_main_menu.png" id="5_vk0un"]
+[ext_resource type="Texture2D" uid="uid://be3tfeuxb0qfl" path="res://assets/UI/btn_hover_restart.png" id="6_knqa7"]
+[ext_resource type="Texture2D" uid="uid://b11ckoa157o37" path="res://assets/UI/btn_hover_main_menu.png" id="8_71k7c"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1177377642]
+process_mode = 3
+script = ExtResource("1_prdx0")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=583801782]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG_image" type="TextureRect" parent="." unique_id=529994206]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -387.0
+offset_top = -218.0
+offset_right = 381.0
+offset_bottom = 214.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_y72sm")
+stretch_mode = 3
+
+[node name="ButtonMargin" type="Control" parent="." unique_id=263671606]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -110.0
+offset_top = 110.0
+offset_right = -70.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonMargin" unique_id=198253146]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 62.0
+offset_bottom = 37.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ResumeBtn" type="TextureButton" parent="ButtonMargin/VBoxContainer" unique_id=1179319168]
+layout_mode = 2
+texture_normal = ExtResource("3_s1krw")
+texture_hover = ExtResource("4_88e76")
+stretch_mode = 0
+
+[node name="RestartBtn" type="TextureButton" parent="ButtonMargin/VBoxContainer" unique_id=6164515]
+layout_mode = 2
+texture_normal = ExtResource("4_bob8p")
+texture_hover = ExtResource("6_knqa7")
+
+[node name="ExitBtn" type="TextureButton" parent="ButtonMargin/VBoxContainer" unique_id=1326935200]
+layout_mode = 2
+texture_normal = ExtResource("5_vk0un")
+texture_hover = ExtResource("8_71k7c")
+
+[connection signal="pressed" from="ButtonMargin/VBoxContainer/ResumeBtn" to="." method="_on_resume_btn_pressed"]
+[connection signal="pressed" from="ButtonMargin/VBoxContainer/RestartBtn" to="." method="_on_restart_btn_pressed"]
+[connection signal="pressed" from="ButtonMargin/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]

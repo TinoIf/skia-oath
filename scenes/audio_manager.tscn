@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bn0mlp8xmaosi"]
+
+[ext_resource type="AudioStream" uid="uid://b8s0o354ookw0" path="res://assets/audio/lonely-wolf-dark-ravers-344755.mp3" id="1_8qd8g"]
+
+[node name="AudioManager" type="Node" unique_id=1904679635]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1710713768]
+stream = ExtResource("1_8qd8g")
+volume_db = -10.992
+autoplay = true
+parameters/looping = true

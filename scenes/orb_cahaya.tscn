@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://bx4tdh6owv0j7"]
+
+[ext_resource type="Script" uid="uid://detnmlnq0xqjt" path="res://scripts/orb_cahaya.gd" id="1_gjkse"]
+[ext_resource type="Texture2D" uid="uid://cjcthnp01y6lf" path="res://assets/Object/SpecOrbs/WithoutOutline/OrbsWithoutOutline_0008_Circle.png" id="2_0h436"]
+[ext_resource type="AudioStream" uid="uid://thas5oklspln" path="res://assets/audio/logo-sfx-316751.mp3" id="3_0h436"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3loho"]
+radius = 76.0
+
+[sub_resource type="Gradient" id="Gradient_b7yeo"]
+offsets = PackedFloat32Array(0.32786885, 0.6803279, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.81960785, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u5kpa"]
+gradient = SubResource("Gradient_b7yeo")
+
+[sub_resource type="Curve" id="Curve_7ljux"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.49324328, 0.55056185), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_evnt2"]
+curve = SubResource("Curve_7ljux")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t1c05"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_evnt2")
+color_ramp = SubResource("GradientTexture1D_u5kpa")
+
+[node name="OrbCahaya" type="Area2D" unique_id=1830766563 groups=["orb"]]
+script = ExtResource("1_gjkse")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1711107755]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_0h436")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=238641279]
+scale = Vector2(0.05, 0.05)
+shape = SubResource("CircleShape2D_3loho")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=693142927]
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_t1c05")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=714478984]
+stream = ExtResource("3_0h436")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

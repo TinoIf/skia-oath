@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://b5wn7xsme3ikk"]
+
+[ext_resource type="Script" uid="uid://camacetettfwr" path="res://scripts/finish_area.gd" id="1_36vq7"]
+[ext_resource type="FontFile" uid="uid://bioeccpvyicxc" path="res://assets/font/BebasNeue-Regular.ttf" id="1_ihn6a"]
+[ext_resource type="Texture2D" uid="uid://dx8rddnoucx7c" path="res://assets/UI/ValueBar_128x16.png" id="3_1asmt"]
+[ext_resource type="Texture2D" uid="uid://binf7by8c1o5x" path="res://assets/UI/ValueBlue_120x8.png" id="4_1asmt"]
+[ext_resource type="AudioStream" uid="uid://cksnflgd1g47x" path="res://assets/audio/dialog_ending_lvl1.ogg" id="5_qns6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihn6a"]
+size = Vector2(404, 263)
+
+[sub_resource type="LabelSettings" id="LabelSettings_36vq7"]
+font = ExtResource("1_ihn6a")
+font_color = Color(0.9438047, 0.7432896, 0.57141864, 1)
+
+[node name="FinishArea" type="Area2D" unique_id=939133789]
+script = ExtResource("1_36vq7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2098097]
+position = Vector2(203, 133)
+shape = SubResource("RectangleShape2D_ihn6a")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=643253018]
+
+[node name="VisualPrompt" type="Control" parent="CanvasLayer" unique_id=2016936441]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/VisualPrompt" unique_id=1411086630]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -74.0
+offset_right = 105.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Tahan [ E ] untuk menggabungkan ORB"
+label_settings = SubResource("LabelSettings_36vq7")
+
+[node name="InteractionBar" type="TextureProgressBar" parent="CanvasLayer/VisualPrompt" unique_id=425528557]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -55.0
+offset_top = -36.0
+offset_right = 65.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+step = 0.0
+texture_under = ExtResource("3_1asmt")
+texture_progress = ExtResource("4_1asmt")
+texture_progress_offset = Vector2(5, 5)
+
+[node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=570715804]
+layer = 100
+
+[node name="WhiteFlashRect" type="ColorRect" parent="TransitionLayer" unique_id=1929168286]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DialogueLabel" type="RichTextLabel" parent="TransitionLayer" unique_id=851554014]
+modulate = Color(0.026167553, 0.026132127, 0.18580517, 1)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -448.0
+offset_top = -107.0
+offset_right = 490.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 32
+text = "\"Cahaya ini... aku mengingatnya. Aku bukan sekadar pengembara. Aku adalah penjaga yang terasing dari Skia.\""
+
+[node name="DialoguePlayer" type="AudioStreamPlayer" parent="TransitionLayer" unique_id=1269276441]
+stream = ExtResource("5_qns6n")
+volume_db = 10.035
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cafgiv4mfbysi"]
+
+[ext_resource type="Script" uid="uid://bhdg0sq44m14x" path="res://scripts/main_menu.gd" id="1_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://c702yxbv84rwe" path="res://assets/UI/bg_pause.png" id="2_oa1go"]
+[ext_resource type="Texture2D" uid="uid://bu2f51j3nqgd" path="res://assets/UI/btn_start.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://cg1w5o1c4rc70" path="res://assets/UI/btn_hover_start.png" id="4_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://c8mxofsrulg52" path="res://assets/UI/btn_exit.png" id="5_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://cajut417fr0yx" path="res://assets/UI/btn_hover_exit.png" id="6_lgwnu"]
+
+[node name="MainMenu" type="Control" unique_id=1379975336]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rtw2f")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2147153929]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1099973027]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_oa1go")
+
+[node name="BG_Image" type="MarginContainer" parent="." unique_id=1323843664]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=927091477]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_right = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=555833958]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="StartBtn" type="TextureButton" parent="MarginContainer/VBoxContainer" unique_id=1091036781]
+layout_mode = 2
+texture_normal = ExtResource("3_tbmy8")
+texture_hover = ExtResource("4_jk1qb")
+stretch_mode = 5
+
+[node name="ExitBtn" type="TextureButton" parent="MarginContainer/VBoxContainer" unique_id=824482312]
+layout_mode = 2
+texture_normal = ExtResource("5_5dd4i")
+texture_hover = ExtResource("6_lgwnu")
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]

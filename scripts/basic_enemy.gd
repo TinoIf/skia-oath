@@ -21,6 +21,8 @@ var is_dead = false # Tambahkan flag untuk mencegah damage ganda saat mati
 @onready var hurtbox = $Hurtbox 
 @onready var main_collision = $CollisionShape2D # Pastikan nama node collision utama benar
 
+var orb_scene = preload("res://scenes/orb_cahaya.tscn")
+
 func _ready():
 	current_hp = max_hp
 	if sprite.material:
@@ -94,8 +96,21 @@ func take_damage(amount: float, source_pos: Vector2 = Vector2.ZERO):
 		_perform_death()
 
 func _perform_death():
-	is_dead = true # Set flag mati
+	is_dead = true
 	velocity = Vector2.ZERO
+	
+	# Matikan collision agar player bisa lewat
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+	
+	# Panggil fungsi spawn orb
+	spawn_orb()
+	
+	if anim.has_animation("dead"):
+		anim.play("dead")
+		await anim.animation_finished
+	
+	die()
 	
 	# 1. MATIKAN SEMUA COLLISION SEGERA (Solusi agar tidak ada 'hantu' monster)
 	# Mematikan layer & mask fisik agar player bisa tembus
@@ -126,3 +141,14 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			body.take_damage(10, global_position)
+			
+func spawn_orb():
+	# 1. Buat 'copy' atau instansi dari scene orb
+	var orb = orb_scene.instantiate()
+	
+	# 2. Atur posisi orb agar sama dengan posisi monster saat ini
+	orb.global_position = global_position
+	
+	# 3. Masukkan orb ke dalam 'World' agar dia tetap ada meskipun monster dihapus
+	# get_parent() biasanya merujuk ke scene World tempat monster diletakkan
+	get_parent().call_deferred("add_child", orb)
